@@ -23,7 +23,7 @@ export class SendTemplateByPhoneNumber implements INodeType {
     ],
     properties: [
       {
-        displayName: 'Account ID',
+        displayName: 'Account UUID',
         name: 'accountUuid',
         type: 'string',
         default: '',
@@ -38,14 +38,14 @@ export class SendTemplateByPhoneNumber implements INodeType {
         description: 'Phone number in E.164 format',
       },
       {
-        displayName: 'Account Channel ID',
+        displayName: 'Account Channel UUID',
         name: 'accountChannelUuid',
         type: 'string',
         default: '',
         required: true,
       },
       {
-        displayName: 'Template ID',
+        displayName: 'Template UUID',
         name: 'templateUuid',
         type: 'string',
         default: '',

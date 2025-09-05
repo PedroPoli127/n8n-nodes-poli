@@ -23,7 +23,7 @@ export class AddTagToContact implements INodeType {
     ],
     properties: [
       {
-        displayName: 'Contact ID',
+        displayName: 'Contact UUID',
         name: 'contactUuid',
         type: 'string',
         required: true,
@@ -31,7 +31,7 @@ export class AddTagToContact implements INodeType {
         description: 'UUID of the contact to which the tag will be added',
       },
       {
-        displayName: 'Tag ID',
+        displayName: 'Tag UUID',
         name: 'tagUuid',
         type: 'string',
         required: true,

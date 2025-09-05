@@ -25,7 +25,7 @@ export class CreateWebhook implements INodeType {
     ],
     properties: [
       {
-        displayName: 'Application ID',
+        displayName: 'Application UUID',
         name: 'applicationId',
         type: 'string',
         default: '',

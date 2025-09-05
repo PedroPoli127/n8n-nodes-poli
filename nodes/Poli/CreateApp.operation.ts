@@ -23,7 +23,7 @@ export class CreateApp implements INodeType {
     ],
     properties: [
       {
-        displayName: 'Account ID',
+        displayName: 'Account UUID',
         name: 'accountId',
         type: 'string',
         default: '',
@@ -76,7 +76,7 @@ export class CreateApp implements INodeType {
         required: true,
       },
       {
-        displayName: 'Picture File ID',
+        displayName: 'Picture File UUID',
         name: 'pictureFileId',
         type: 'string',
         default: '',

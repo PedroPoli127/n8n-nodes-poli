@@ -4,7 +4,7 @@ import { getParameterSafe } from './utils/parameterUtils';
 
 export const listTagsFields: INodeProperties[] = [
 	{
-		displayName: 'Account ID',
+		displayName: 'Account UUID',
 		name: 'accountId',
 		type: 'string',
 		default: '',

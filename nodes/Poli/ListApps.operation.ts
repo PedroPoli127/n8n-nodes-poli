@@ -24,7 +24,7 @@ export class ListApps implements INodeType {
     ],
     properties: [
       {
-        displayName: 'Account ID',
+        displayName: 'Account UUID',
         name: 'accountId',
         type: 'string',
         default: '',

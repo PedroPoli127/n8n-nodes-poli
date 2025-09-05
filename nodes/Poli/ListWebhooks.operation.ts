@@ -7,7 +7,7 @@ import { getParameterSafe } from './utils/parameterUtils'; // Ajuste o caminho d
  */
 export const listWebhooksFields: INodeProperties[] = [
 	{
-		displayName: 'Application ID',
+		displayName: 'Application UUID',
 		name: 'applicationId',
 		type: 'string',
 		default: '',

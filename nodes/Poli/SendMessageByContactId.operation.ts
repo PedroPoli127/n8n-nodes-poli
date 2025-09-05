@@ -5,7 +5,7 @@ import { getParameterSafe } from './utils/parameterUtils';
 
 export class SendMessageByContactId implements INodeType {
   description: INodeTypeDescription = {
-    displayName: 'Send Message By Contact ID',
+    displayName: 'Send Message By Contact UUID',
     name: 'sendMessageByContactId',
     icon: 'file:poli.svg',
     group: ['output'],
@@ -24,14 +24,14 @@ export class SendMessageByContactId implements INodeType {
     ],
     properties: [
       {
-        displayName: 'Contact ID',
+        displayName: 'Contact UUID',
         name: 'contactId',
         type: 'string',
         default: '',
         required: true,
       },
       {
-        displayName: 'Account Channel ID',
+        displayName: 'Account Channel UUID',
         name: 'accountChannelUuid',
         type: 'string',
         default: '',

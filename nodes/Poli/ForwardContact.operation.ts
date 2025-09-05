@@ -23,7 +23,7 @@ export class ForwardContact implements INodeType {
     ],
     properties: [
       {
-        displayName: 'Contact ID',
+        displayName: 'Contact UUID',
         name: 'contactUuid',
         type: 'string',
         default: '',
@@ -52,7 +52,7 @@ export class ForwardContact implements INodeType {
         required: true,
       },
       {
-        displayName: 'User ID',
+        displayName: 'User UUID',
         name: 'userUuid',
         type: 'string',
         default: '',
@@ -65,7 +65,7 @@ export class ForwardContact implements INodeType {
         required: true,
       },
       {
-        displayName: 'Team ID',
+        displayName: 'Team UUID',
         name: 'teamUuid',
         type: 'string',
         default: '',

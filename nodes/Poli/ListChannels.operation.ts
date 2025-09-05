@@ -11,7 +11,7 @@ import { getParameterSafe } from './utils/parameterUtils';
 
 export const listChannelsFields: INodeProperties[] = [
 	{
-		displayName: 'Account ID',
+		displayName: 'Account UUID',
 		name: 'accountId',
 		type: 'string',
 		default: '',

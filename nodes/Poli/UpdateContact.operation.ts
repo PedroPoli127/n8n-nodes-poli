@@ -33,7 +33,7 @@ export const updateContactFields: INodeProperties[] = [
 				description: 'Nome do contato',
 			},
 			{
-				displayName: 'Picture File ID',
+				displayName: 'Picture File UUID',
 				name: 'pictureFileId',
 				type: 'string',
 				default: '',

@@ -17,14 +17,14 @@ export class CreateContact implements INodeType {
             { name: 'poliApi', required: true },
         ],
         properties: [
-            { displayName: 'Account ID', name: 'accountId', type: 'string', default: '', required: true },
+            { displayName: 'Account UUID', name: 'accountId', type: 'string', default: '', required: true },
             { displayName: 'Name', name: 'name', type: 'string', default: '', required: true },
             { displayName: 'Phone (com DDD)', name: 'phone', type: 'string', default: '', required: true },
             { displayName: 'E-mail', name: 'email', type: 'string', default: '' },
             { displayName: 'CPF/CNPJ', name: 'doc', type: 'string', default: '' },
-            { displayName: 'Picture File ID', name: 'pictureFileId', type: 'string', default: '', description: 'Opcional. file_id de um arquivo já enviado para usar como foto' },
-            { displayName: 'Tag ID', name: 'tagUuid', type: 'string', default: '', description: 'Opcional. Uma tag para associar ao contato' },
-            { displayName: 'Contact Account ID', name: 'companyUuid', type: 'string', default: '', description: 'Opcional. Empresa para relacionar com o contato. Enviada em companies[]. Troque para attributes.company_uuid se sua API exigir.' },
+            { displayName: 'Picture File UUID', name: 'pictureFileId', type: 'string', default: '', description: 'Opcional. file_id de um arquivo já enviado para usar como foto' },
+            { displayName: 'Tag UUID', name: 'tagUuid', type: 'string', default: '', description: 'Opcional. Uma tag para associar ao contato' },
+            { displayName: 'Contact Account UUID', name: 'companyUuid', type: 'string', default: '', description: 'Opcional. Empresa para relacionar com o contato. Enviada em companies[]. Troque para attributes.company_uuid se sua API exigir.' },
 
             // Addresses (já existente)
             {
