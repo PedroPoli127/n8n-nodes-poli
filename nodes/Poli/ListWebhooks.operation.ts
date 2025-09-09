@@ -1,6 +1,7 @@
 import { IExecuteFunctions, INodeProperties, JsonObject, NodeApiError, INodeType, INodeTypeDescription } from 'n8n-workflow';
 import { apiRequest } from './transport';
-import { getParameterSafe } from './utils/parameterUtils'; // Ajuste o caminho do import se necessário
+import { getParameterSafe } from './utils/parameterUtils';
+import { processApiResponseForN8n } from './utils/responseFilter'; // Ajuste o caminho do import se necessário
 
 /**
  * Propriedades da UI para a operação 'List Webhooks'
@@ -26,6 +27,7 @@ export const listWebhooksFields: INodeProperties[] = [
 				name: 'search',
 				type: 'string',
 				default: '',
+				description: 'Texto para busca de webhooks',
 			},
 			{
 				displayName: 'Order',

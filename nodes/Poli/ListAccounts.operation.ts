@@ -8,6 +8,7 @@ import {
 } from 'n8n-workflow';
 import { apiRequest } from './transport';
 import { getParameterSafe } from './utils/parameterUtils';
+import { processApiResponseForN8n } from './utils/responseFilter';
 
 export const listAccountsFields: INodeProperties[] = [
 	{
@@ -22,6 +23,7 @@ export const listAccountsFields: INodeProperties[] = [
 				name: 'search',
 				type: 'string',
 				default: '',
+				description: 'Texto para busca de contas',
 			},
 			{
 				displayName: 'Order',

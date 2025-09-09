@@ -7,6 +7,7 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 import { apiRequest } from './transport';
+import { processApiResponseForN8n } from './utils/responseFilter';
 
 export const getMeFields: INodeProperties[] = [
 	// GetMe não requer parâmetros adicionais, pois retorna informações do usuário autenticado
@@ -20,7 +21,10 @@ export async function executeGetMe(this: IExecuteFunctions): Promise<any> {
 		try {
 			const endpoint = '/auth/get-me';
 			const responseData = await apiRequest.call(this, 'GET', endpoint);
-			returnData.push({ json: responseData });
+			
+			// Filtra a resposta para remover campos desnecessários
+			const filteredData = processApiResponseForN8n(responseData, true);
+			returnData.push({ json: filteredData });
 		} catch (error) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}

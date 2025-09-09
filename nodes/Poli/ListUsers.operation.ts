@@ -8,6 +8,7 @@ import {
 } from 'n8n-workflow';
 import { apiRequest } from './transport';
 import { getParameterSafe } from './utils/parameterUtils';
+import { processApiResponseForN8n } from './utils/responseFilter';
 
 export const listUsersFields: INodeProperties[] = [
 	{
@@ -126,7 +127,10 @@ export async function executeListUsers(this: IExecuteFunctions): Promise<any> {
 
 			const endpoint = `/accounts/${accountUuid}/users?${params.toString()}`;
 			const responseData = await apiRequest.call(this, 'GET', endpoint);
-			returnData.push({ json: responseData });
+			
+			// Filtra a resposta para remover campos desnecessários
+			const filteredData = processApiResponseForN8n(responseData, true);
+			returnData.push({ json: filteredData });
 		} catch (error) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}

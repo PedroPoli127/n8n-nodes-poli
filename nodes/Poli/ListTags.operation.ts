@@ -1,6 +1,7 @@
 import { IExecuteFunctions, INodeType, INodeTypeDescription, JsonObject, NodeApiError, INodeProperties } from 'n8n-workflow';
 import { apiRequest } from './transport';
 import { getParameterSafe } from './utils/parameterUtils';
+import { processApiResponseForN8n } from './utils/responseFilter';
 
 export const listTagsFields: INodeProperties[] = [
 	{
@@ -23,6 +24,7 @@ export const listTagsFields: INodeProperties[] = [
 				name: 'search',
 				type: 'string',
 				default: '',
+				description: 'Texto para busca de tags',
 			},
 			{
 				displayName: 'Order',

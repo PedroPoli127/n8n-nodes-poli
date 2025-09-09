@@ -8,6 +8,7 @@ import {
 } from 'n8n-workflow';
 import { apiRequest } from './transport';
 import { getParameterSafe } from './utils/parameterUtils';
+import { processApiResponseForN8n } from './utils/responseFilter';
 
 export const getChannelFields: INodeProperties[] = [
 	{
