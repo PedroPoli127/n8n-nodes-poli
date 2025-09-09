@@ -10,5 +10,18 @@ yarn-debug.log*
 yarn-error.log*
 
 # Arquivos de IDE
-.vscode.npmrc
+.vscode
 .npmrc
+
+# Arquivos temporários e backups
+*.tmp
+*.log
+*.bak
+*.old
+*.orig
+*.backup
+*.tgz
+*.tar.gz
+
+# Scripts de desenvolvimento
+*.py
