@@ -122,7 +122,10 @@ export async function executeListTeams(this: IExecuteFunctions): Promise<any> {
 
 			const endpoint = `/accounts/${accountUuid}/teams?${params.toString()}`;
 			const responseData = await apiRequest.call(this, 'GET', endpoint);
-			returnData.push({ json: responseData });
+			
+			// Filtra a resposta para remover campos desnecessários
+			const filteredData = processApiResponseForN8n(responseData, true);
+			returnData.push({ json: filteredData });
 		} catch (error) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}

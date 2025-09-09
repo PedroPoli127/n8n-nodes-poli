@@ -73,7 +73,10 @@ export async function executeGetTeam(this: IExecuteFunctions): Promise<any> {
 			const endpoint = `/teams/${teamUuid}${queryString ? `?${queryString}` : ''}`;
 			
 			const responseData = await apiRequest.call(this, 'GET', endpoint);
-			returnData.push({ json: responseData });
+			
+			// Filtra a resposta para remover campos desnecessários
+			const filteredData = processApiResponseForN8n(responseData, true);
+			returnData.push({ json: filteredData });
 		} catch (error) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
