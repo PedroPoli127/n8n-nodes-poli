@@ -100,7 +100,7 @@ export class CreateApp implements INodeType {
         const email = getParameterSafe(this, 'email', i, '') as string;
         const pictureFileId = getParameterSafe(this, 'pictureFileId', i, '') as string;
 
-        const body = {
+        const body: any = {
           visibility: visibility.toUpperCase(),
           attributes: {
             name: appName,
@@ -108,20 +108,15 @@ export class CreateApp implements INodeType {
             responsible,
             phone,
             email,
-            picture: pictureFileId ? { file_id: pictureFileId } : undefined,
           },
-          attachments: [],
-          settings: [
-            {
-              type: 'link',
-              name: 'webhook',
-              placeholder: 'https://example.com/webhook',
-            },
-          ],
-          resources: [],
         };
 
-        const endpoint = `/accounts/${accountId}/applications?include=attributes`;
+        // Adiciona picture apenas se fornecida
+        if (pictureFileId) {
+          body.attributes.picture = { file_id: pictureFileId };
+        }
+
+        const endpoint = `/accounts/${accountId}/apps?include=*`;
         const responseData = await apiRequest.call(this, 'POST', endpoint, body);
         returnData.push({ json: responseData });
       } catch (error) {

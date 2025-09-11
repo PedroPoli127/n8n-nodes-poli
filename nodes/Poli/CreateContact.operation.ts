@@ -59,25 +59,50 @@ export class CreateContact implements INodeType {
                 ],
             },
 
-            // Novo campo Channels
+            // Novo campo Contact Channels
             {
-                displayName: 'Channels',
-                name: 'channels',
+                displayName: 'Contact Channels',
+                name: 'contactChannels',
                 type: 'fixedCollection',
-                placeholder: 'Add Channel',
+                placeholder: 'Add Contact Channel',
                 typeOptions: { multipleValues: true },
                 default: {},
+                description: 'Canais de contato para associar ao contato (WhatsApp, SMS, etc.)',
                 options: [
                     {
                         name: 'channel',
-                        displayName: 'Channel',
+                        displayName: 'Contact Channel',
                         values: [
                             {
                                 displayName: 'Phone (com DDD)',
-                                name: 'phone',
+                                name: 'uid',
                                 type: 'string',
                                 default: '',
-                                description: 'Número de telefone do contato. Será preenchido nos dois campos da API automaticamente.',
+                                required: true,
+                                description: 'Número de telefone que será usado como UID do canal',
+                            },
+                            {
+                                displayName: 'Provider',
+                                name: 'provider',
+                                type: 'options',
+                                options: [
+                                    { name: 'WhatsApp', value: 'WHATSAPP' },
+                                    { name: 'SMS', value: 'SMS' },
+                                    { name: 'Voice', value: 'VOICE' },
+                                ],
+                                default: 'WHATSAPP',
+                                description: 'Provedor do canal de comunicação',
+                            },
+                            {
+                                displayName: 'Type',
+                                name: 'type',
+                                type: 'options',
+                                options: [
+                                    { name: 'Default', value: 'DEFAULT' },
+                                    { name: 'Business', value: 'BUSINESS' },
+                                ],
+                                default: 'DEFAULT',
+                                description: 'Tipo do canal',
                             },
                         ],
                     },
@@ -106,7 +131,9 @@ export class CreateContact implements INodeType {
 
                 // Obtenção segura de coleções complexas
                 const addressesParam = getParameterSafe(this, 'addresses', i, {}) as { address?: Array<Record<string, string>> };
-                const channelsParam = getParameterSafe(this, 'channels', i, {}) as { channel?: Array<{ phone: string }> };
+                const contactChannelsParam = getParameterSafe(this, 'contactChannels', i, {}) as { 
+                    channel?: Array<{ uid: string; provider: string; type: string }> 
+                };
 
                 const body: any = {
                     type: 'PERSON',
@@ -122,17 +149,18 @@ export class CreateContact implements INodeType {
                 if (pictureFileId) body.attributes.picture = { file_id: pictureFileId };
                 if (tagUuid) body.tags = [{ uuid: tagUuid }];
 
-                // Channels
-                if (channelsParam.channel?.length) {
-                    body.contact_channels = channelsParam.channel.map(c => ({
-                        type: 'PHONE',
-                        phone: c.phone,        // Preenche o segundo campo de phone da API
-                        provider: 'DEFAULT',
-                        default: true,
+                // Contact Channels
+                if (contactChannelsParam.channel?.length) {
+                    body.contact_channels = contactChannelsParam.channel.map(c => ({
+                        uid: c.uid,
+                        provider: c.provider || 'WHATSAPP',
+                        type: c.type || 'DEFAULT',
                     }));
 
-                    // Também garante que o atributo principal phone seja igual ao preenchido no channel
-                    body.attributes.phone = channelsParam.channel[0].phone;
+                    // Se há um canal definido, usa o primeiro uid como phone principal
+                    if (contactChannelsParam.channel[0].uid) {
+                        body.attributes.phone = contactChannelsParam.channel[0].uid;
+                    }
                 }
 
                 // Empresa (relacionamento)
