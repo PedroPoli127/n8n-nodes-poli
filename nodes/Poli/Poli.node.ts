@@ -22,6 +22,7 @@ import { ListAccounts } from './ListAccounts.operation';
 
 import { ListChannels } from './ListChannels.operation';
 import { GetChannel } from './GetChannel.operation';
+import { ListChats } from './ListChats.operation';
 
 import { SendMessageByContactId } from './SendMessageByContactId.operation';
 import { SendMessageByPhoneNumber } from './SendMessageByPhoneNumber.operation';
@@ -59,6 +60,9 @@ export class Poli implements INodeType {
 			channel: {
 				list: new ListChannels(),
 				get: new GetChannel(),
+			},
+			chat: {
+				list: new ListChats(),
 			},
 			message: {
 				sendByContactId: new SendMessageByContactId(),
@@ -109,6 +113,7 @@ export class Poli implements INodeType {
 						{ name: 'Message', value: 'message' },
 						{ name: 'Template', value: 'template' },
 						{ name: 'Contact', value: 'contact' },
+						{ name: 'Chat', value: 'chat' },
 						{ name: 'Tag', value: 'tag' },
 						{ name: 'User', value: 'user' },
 						{ name: 'Team', value: 'team' },
@@ -194,6 +199,18 @@ export class Poli implements INodeType {
 						{ name: 'Add Tag to Contact', value: 'addTag', action: 'Add Tag to Contact' },
 						{ name: 'Forward Contact', value: 'forward', action: 'Forward Contact' },
 						{ name: 'List Messages from Contact ID', value: 'listMessages', action: 'List Messages from Contact ID' },
+					],
+					default: 'list',
+				},
+				// CHAT ACTIONS
+				{
+					displayName: 'Operation',
+					name: 'operation',
+					type: 'options',
+					noDataExpression: true,
+					displayOptions: { show: { resource: ['chat'] } },
+					options: [
+						{ name: 'List Chats', value: 'list', action: 'List Chats' },
 					],
 					default: 'list',
 				},
