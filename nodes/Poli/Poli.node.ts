@@ -336,6 +336,7 @@ export class Poli implements INodeType {
 				app: 'list',
 				account: 'list',
 				channel: 'list',
+				chat: 'list',
 				message: 'sendByContactId',
 				template: 'list',
 				contact: 'list',
@@ -368,6 +369,9 @@ export class Poli implements INodeType {
 			channel: {
 				list: new ListChannels(),
 				get: new GetChannel(),
+			},
+			chat: {
+				list: new ListChats(),
 			},
 			message: {
 				sendByContactId: new SendMessageByContactId(),

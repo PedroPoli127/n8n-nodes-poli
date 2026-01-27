@@ -66,9 +66,52 @@ export const listChatsFields: INodeProperties[] = [
                     { name: 'Attendant', value: 'attendant' },
                     { name: 'Attributes', value: 'attributes' },
                 ],
-                // deixar attributes como default conforme solicitado
-                default: ['attributes'],
+                default: ['read_status', 'chat_status', 'attendant'],
                 description: 'Campos adicionais para incluir na resposta',
+            },
+            {
+                displayName: 'Filters',
+                name: 'filters',
+                type: 'collection',
+                placeholder: 'Add Filter',
+                default: {},
+                options: [
+                    {
+                        displayName: 'Tags',
+                        name: 'tags',
+                        type: 'string',
+                        default: '',
+                        description: 'Filtrar por tags (separadas por vírgula)',
+                    },
+                    {
+                        displayName: 'Users',
+                        name: 'users',
+                        type: 'string',
+                        default: '',
+                        description: 'Filtrar por usuários (IDs separados por vírgula)',
+                    },
+                    {
+                        displayName: 'Teams',
+                        name: 'teams',
+                        type: 'string',
+                        default: '',
+                        description: 'Filtrar por times (IDs separados por vírgula)',
+                    },
+                    {
+                        displayName: 'Started At (From)',
+                        name: 'startedAtFrom',
+                        type: 'dateTime',
+                        default: '',
+                        description: 'Data de início (de) - formato: YYYY-MM-DD HH:mm',
+                    },
+                    {
+                        displayName: 'Started At (To)',
+                        name: 'startedAtTo',
+                        type: 'dateTime',
+                        default: '',
+                        description: 'Data de início (até) - formato: YYYY-MM-DD HH:mm',
+                    },
+                ],
             },
         ],
     },
@@ -87,6 +130,13 @@ export async function executeListChats(this: IExecuteFunctions): Promise<any> {
                 perPage?: number;
                 include?: string[];
                 query?: string;
+                filters?: {
+                    tags?: string;
+                    users?: string;
+                    teams?: string;
+                    startedAtFrom?: string;
+                    startedAtTo?: string;
+                };
             };
 
             const params = new URLSearchParams();
@@ -95,6 +145,43 @@ export async function executeListChats(this: IExecuteFunctions): Promise<any> {
             if (options.page) params.append('page', options.page.toString());
             if (options.perPage) params.append('perPage', options.perPage.toString());
             if (options.include?.length) params.append('include', options.include.join(','));
+
+            // Implementar filtros conforme a especificação da API
+            if (options.filters) {
+                const filterParts: string[] = [];
+                
+                if (options.filters.tags) {
+                    const tags = options.filters.tags.split(',').map(tag => tag.trim());
+                    filterParts.push(`tags=([${tags.join(',')}])`);
+                }
+                
+                if (options.filters.users) {
+                    const users = options.filters.users.split(',').map(user => user.trim());
+                    filterParts.push(`users=(${users.join(',')})`);
+                }
+                
+                if (options.filters.teams) {
+                    const teams = options.filters.teams.split(',').map(team => team.trim());
+                    filterParts.push(`teams=(${teams.join(',')})`);
+                }
+                
+                if (options.filters.startedAtFrom || options.filters.startedAtTo) {
+                    const dateFilters: string[] = [];
+                    if (options.filters.startedAtFrom) {
+                        dateFilters.push(`gt=${options.filters.startedAtFrom}`);
+                    }
+                    if (options.filters.startedAtTo) {
+                        dateFilters.push(`lt=${options.filters.startedAtTo}`);
+                    }
+                    if (dateFilters.length > 0) {
+                        filterParts.push(`started_at=([${dateFilters.join(',')}])`);
+                    }
+                }
+                
+                if (filterParts.length > 0) {
+                    params.append('filters', `(${filterParts.join(',')})`);
+                }
+            }
 
             if (options.query) {
                 for (const part of options.query.split('&')) {
