@@ -26,6 +26,7 @@ import { ListChats } from './ListChats.operation';
 
 import { SendMessageByContactId } from './SendMessageByContactId.operation';
 import { SendMessageByPhoneNumber } from './SendMessageByPhoneNumber.operation';
+import { SendMediaByContactId } from './SendMediaByContactId.operation';
 import { ListMessagesFromContact } from './ListMessagesFromContact.operation';
 
 import { ListTemplates } from './ListTemplates.operation';
@@ -67,6 +68,7 @@ export class Poli implements INodeType {
 			message: {
 				sendByContactId: new SendMessageByContactId(),
 				sendByPhone: new SendMessageByPhoneNumber(),
+				sendMediaByContactId: new SendMediaByContactId(),
 			},
 			template: {
 				list: new ListTemplates(),
@@ -168,6 +170,7 @@ export class Poli implements INodeType {
 					options: [
 						{ name: 'Send Message By Contact ID', value: 'sendByContactId', action: 'Send Message By Contact ID' },
 						{ name: 'Send Message By Phone', value: 'sendByPhone', action: 'Send Message By Phone' },
+						{ name: 'Send Media By Contact UUID', value: 'sendMediaByContactId', action: 'Send Media By Contact UUID' },
 					],
 					default: 'sendByContactId',
 				},
@@ -369,6 +372,7 @@ export class Poli implements INodeType {
 			message: {
 				sendByContactId: new SendMessageByContactId(),
 				sendByPhone: new SendMessageByPhoneNumber(),
+				sendMediaByContactId: new SendMediaByContactId(),
 			},
 			template: {
 				list: new ListTemplates(),
